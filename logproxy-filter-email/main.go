@@ -16,7 +16,6 @@ import (
 )
 
 var (
-	triggerEmailPattern = regexp.MustCompile(`Trigger Email`)
 	log = hclog.Default()
 )
 
@@ -24,12 +23,13 @@ type TriggerEmail struct{
 	emailTo string
 	emailFrom string
 	emailSubject string
+	pattern *regexp.Regexp
 	smtpData smtptype.Smtp
 }
 
 
 func (f TriggerEmail) Filter(msg logging.Resource) (logging.Resource, bool, bool, error) {
-	if req := triggerEmailPattern.FindStringSubmatch(msg.LogData.Message); req != nil {
+	if req := f.pattern.FindStringSubmatch(msg.LogData.Message); req != nil {
 		// Send email
 		go func() {
 			log.Info("Triggering email!")
@@ -61,6 +61,13 @@ func main() {
 	filter.emailTo = os.Getenv("EMAIL_TO")
 	filter.emailSubject = os.Getenv("EMAIL_SUBJECT")
 	filter.emailFrom = os.Getenv("EMAIL_FROM")
+	reg := os.Getenv("FILTER_REGEXP")
+	pattern, err := regexp.Compile(reg)
+	if err != nil {
+		log.Error("failed to compile FILTER_REGEXP", "regexp", reg)
+		return
+	}
+	filter.pattern = pattern
 
 	plugin.Serve(&plugin.ServeConfig{
 		HandshakeConfig: shared.Handshake,
