@@ -3,7 +3,12 @@ This projects contains a number of [logproxy](https://github.com/philips-softwar
 
 Plugins are compiled binaries running alongside the main logproxy process which manages the complete lifecycle. 
 It detects and loads any plugins found in the search paths. The 
-mechanism is based on [Hashicorp's Go plugin system](https://github.com/hashicorp/go-plugin).
+mechanism is based on [Hashicorp's Go plugin system](https://github.com/hashicorp/go-plugin). Some use cases
+for writing a plugin:
+
+- Dropping verbose or high frequency logs which are not interesting (saving costs)
+- Trigger events (e.g. send an email, call a webhook) when certain patterns in your logs are detected
+- Controlled forwarding of logs to other systems
 
 ## Plugin interface
 Plugins implement a single method  from the `Filter` interface
