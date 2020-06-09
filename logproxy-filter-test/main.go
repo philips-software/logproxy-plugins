@@ -10,9 +10,13 @@ import (
 
 type Filter struct{}
 
-func (Filter) Filter(msg logging.Resource) (logging.Resource, bool, bool, error) {
+func (f Filter) Filter(msg logging.Resource) (logging.Resource, bool, bool, error) {
+	modified := false
+	dropped := false
 	hclog.Default().Info(fmt.Sprintf("Processed: %s", msg.ID))
-	return msg, false, false, nil
+	msg.ID = "42"
+	modified = true	
+	return msg, dropped, modified, nil
 }
 
 func main() {
