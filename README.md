@@ -9,6 +9,7 @@ for writing a plugin:
 - Dropping verbose or high frequency logs which are not interesting (saving costs)
 - Trigger events (e.g. send an email, call a webhook) when certain patterns in your logs are detected
 - Controlled forwarding of logs to other systems
+- Log enrichment e.g. by parsing fields or adding data from external systems
 
 ## Plugin interface
 Plugins implement a single method  from the `Filter` interface
