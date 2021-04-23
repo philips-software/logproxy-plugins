@@ -14,7 +14,7 @@ Below is an example `manifest.yml` for deployment to Cloud foundry:
 ```
 ---
 applications:
-- name: logproxy-filter-obfuscate
+- name: logproxy-filter-replace
   docker:
     image: jdelucaa/logproxy-filter-replace:latest
   env:
