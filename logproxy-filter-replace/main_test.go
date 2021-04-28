@@ -2,18 +2,37 @@ package main
 
 import (
 	"fmt"
-	"regexp"
+	"github.com/hashicorp/go-hclog"
+	"os"
 	"testing"
 
 	"github.com/philips-software/go-hsdp-api/logging"
 )
 
-func TestTriggerReplace_Filter(t *testing.T) {
+// SETUP
+// Importantly you need to call Run() once you've done what you need
+func TestMain(m *testing.M) {
+	log = hclog.NewNullLogger()
+	os.Exit(m.Run())
+}
+
+func TestFilter_Filter(t *testing.T) {
+	type fields struct {
+		filterList []FilterReplace
+	}
+	type args struct {
+		msg string
+	}
+	config := []Config{
+		{
+			Pattern: "[a-z0-9._%+\\-]+@[a-z0-9.\\-]+\\.[a-z]{2,4}",
+			Replace: "<email obfuscated>",
+		},
+	}
 	tests := []struct {
 		name           string
-		regex          string
-		replaceStr     string
-		logMessage     string
+		fields         fields
+		args           args
 		wantLogMessage string
 		wantDropped    bool
 		wantModified   bool
@@ -21,9 +40,8 @@ func TestTriggerReplace_Filter(t *testing.T) {
 	}{
 		{
 			"Modified",
-			"[a-z0-9._%+\\-]+@[a-z0-9.\\-]+\\.[a-z]{2,4}",
-			"<email obfuscated>",
-			"dumbmessage lilpotato@potato.com foobarmessage bigpotato@potato.com",
+			fields{filterList: parse(config)},
+			args{msg: "dumbmessage lilpotato@potato.com foobarmessage bigpotato@potato.com"},
 			fmt.Sprintf("dumbmessage %s foobarmessage %s", "<email obfuscated>", "<email obfuscated>"),
 			false,
 			true,
@@ -31,9 +49,8 @@ func TestTriggerReplace_Filter(t *testing.T) {
 		},
 		{
 			"NotModified",
-			"[a-z0-9._%+\\-]+@[a-z0-9.\\-]+\\.[a-z]{2,4}",
-			"",
-			"dumbmessage foobarmessage",
+			fields{filterList: parse(config)},
+			args{msg: "dumbmessage foobarmessage"},
 			"dumbmessage foobarmessage",
 			false,
 			false,
@@ -42,30 +59,24 @@ func TestTriggerReplace_Filter(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			filter := &TriggerReplace{}
-			reg := tt.regex
-			pattern, err := regexp.Compile(reg)
-			if err != nil {
-				log.Error("failed to compile FILTER_REGEXP", "regexp", reg)
-				return
+			f := Filter{
+				filterList: tt.fields.filterList,
 			}
-			filter.pattern = pattern
-			filter.replace = tt.replaceStr
-			logging := &logging.Resource{}
-			logging.LogData.Message = tt.logMessage
-			got, got1, got2, err := filter.Filter(*logging)
-			if got.LogData.Message != tt.wantLogMessage {
-				t.Errorf("TriggerReplace.Filter() got = %v, want %v", got.LogData.Message, tt.wantLogMessage)
-			}
-			if got1 != tt.wantDropped {
-				t.Errorf("TriggerReplace.Filter() got1 = %v, want %v", got1, tt.wantDropped)
-			}
-			if got2 != tt.wantModified {
-				t.Errorf("TriggerReplace.Filter() got2 = %v, want %v", got2, tt.wantModified)
-			}
+			log := &logging.Resource{}
+			log.LogData.Message = tt.args.msg
+			msg, dropped, modified, err := f.Filter(*log)
 			if err != tt.wantErr {
-				t.Errorf("TriggerReplace.Filter() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("Filter() error = %v, wantErr %v", err, tt.wantErr)
 				return
+			}
+			if msg.LogData.Message != tt.wantLogMessage {
+				t.Errorf("FilterReplace.Filter() got = %v, want %v", msg.LogData.Message, tt.wantLogMessage)
+			}
+			if dropped != tt.wantDropped {
+				t.Errorf("Filter() got1 = %v, want %v", dropped, tt.wantDropped)
+			}
+			if modified != tt.wantModified {
+				t.Errorf("Filter() got2 = %v, want %v", modified, tt.wantModified)
 			}
 		})
 	}

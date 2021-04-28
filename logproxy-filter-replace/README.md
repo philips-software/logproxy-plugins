@@ -1,14 +1,30 @@
 # logproxy-filter-replace
-Example filter that replaces text in messages based on pattern. Configure the pattern by
-passing it via the `FILTER_REGEXP` environment variable and the string to replace by passing it via the `REPLACE_STRING` variable.
 
-This plugin can be useful for obfuscating sensitive information in the log messages.
+Example filter that replaces texts in messages based on patterns. Configure the patterns by
+passing them via the `FILTER_CONFIG` environment variable. The content of the variable must be a base64 encoded json.
+
+The json should look like the example below and be encoded to base64 format.
+
+```json
+[
+  {
+    "pattern": "(([A-Z])\\w+)",
+    "replace": "<FooBar>"
+  }
+]
+```
+The filter will look for all the patterns in this list and replace by the corresponding `replace` string. 
+
+This can be useful for obfuscating sensitive information in the log messages.
 
 # building
+
 ```
 docker build -t logproxy-filter-replace .
 ```
+
 # deployment
+
 Below is an example `manifest.yml` for deployment to Cloud foundry:
 
 ```
@@ -18,8 +34,7 @@ applications:
   docker:
     image: jdelucaa/logproxy-filter-replace:latest
   env:
-    FILTER_REGEXP: "Find this"
-    REPLACE_STRING: "Replace with this"
+    FILTER_CONFIG: "Ww0KICB7DQogICAgInBhdHRlcm4iOiAiKChbQS1aXSlcXHcrKSIsDQogICAgInJlcGxhY2UiOiAiPEZvb0Jhcj4iDQogIH0NCl0NCg=="
     LOGPROXY_QUEUE: channel
     HSDP_LOGINGESTOR_KEY: YourKeyHere
     HSDP_LOGINGESTOR_PRODUCT_KEY: product-key-45c1-here-deadbeafoobar
