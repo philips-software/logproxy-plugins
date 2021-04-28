@@ -16,5 +16,5 @@ RUN go build .
 
 FROM philipssoftware/logproxy:latest
 RUN apk --no-cache add ca-certificates
-COPY --from=builder /plugin/logproxy-filter-email /app
+COPY --from=builder /plugin/logproxy-filter-replace /app
 

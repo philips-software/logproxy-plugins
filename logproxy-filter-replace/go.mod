@@ -1,8 +1,6 @@
-module logproxy-filter-test
+module logproxy-filter-replace
 
-go 1.14
-
-replace github.com/philips-software/logproxy v1.1.2-0.20200601065553-015bf068c4e0 => /Users/andy/DEV/Go/logproxy
+go 1.16
 
 require (
 	github.com/hashicorp/go-hclog v0.16.0
