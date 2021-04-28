@@ -13,7 +13,10 @@ The json should look like the example below and be encoded to base64 format.
   }
 ]
 ```
-The filter will look for all the patterns in this list and replace by the corresponding `replace` string. 
+
+Note: All invalid regular expressions will be skipped.
+
+The filter will look for all the patterns in this list and replace by the corresponding `replace` string.
 
 This can be useful for obfuscating sensitive information in the log messages.
 
