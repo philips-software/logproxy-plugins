@@ -1,49 +1,62 @@
 package main
 
 import (
-	"os"
+	"github.com/hashicorp/go-plugin"
+	"github.com/philips-software/logproxy/shared"
 	"regexp"
 	"strings"
 
 	"github.com/hashicorp/go-hclog"
-	"github.com/hashicorp/go-plugin"
 	"github.com/philips-software/go-hsdp-api/logging"
-	"github.com/philips-software/logproxy/shared"
 )
 
 var (
 	log = hclog.Default()
 )
 
-type TriggerReplace struct {
+type FilterReplace struct {
 	pattern *regexp.Regexp
 	replace string
 }
 
-func (f TriggerReplace) Filter(msg logging.Resource) (logging.Resource, bool, bool, error) {
-	modified := false
-	dropped := false
-	if req := f.pattern.FindAllStringSubmatch(msg.LogData.Message, -1); req != nil {
-		for i := range req {
-			for j := range req[i] {
-				msg.LogData.Message = strings.ReplaceAll(msg.LogData.Message, req[i][j], f.replace)
-			}
+type Filter struct {
+	filterList []FilterReplace
+}
+
+func parse(config []Config) (ret []FilterReplace) {
+	for _, filterConfig := range config {
+		filter := &FilterReplace{}
+		compiled, err := regexp.Compile(filterConfig.Pattern)
+		if err != nil {
+			log.Error("Failed to compile regexp", "regexp", filterConfig.Pattern)
+			return
 		}
-		modified = true
+		filter.pattern = compiled
+		filter.replace = filterConfig.Replace
+		ret = append(ret, *filter)
 	}
-	return msg, dropped, modified, nil
+	return ret
+}
+
+func (f Filter) Filter(msg logging.Resource) (logging.Resource, bool, bool, error) {
+	modified := false
+	for _, filter := range f.filterList {
+		if req := filter.pattern.FindAllStringSubmatch(msg.LogData.Message, -1); req != nil {
+			for i := range req {
+				for j := range req[i] {
+					msg.LogData.Message = strings.ReplaceAll(msg.LogData.Message, req[i][j], filter.replace)
+				}
+			}
+			modified = true
+		}
+	}
+
+	return msg, false, modified, nil
 }
 
 func main() {
-	filter := &TriggerReplace{}
-	reg := os.Getenv("FILTER_REGEXP")
-	pattern, err := regexp.Compile(reg)
-	if err != nil {
-		log.Error("failed to compile FILTER_REGEXP", "regexp", reg)
-		return
-	}
-	filter.pattern = pattern
-	filter.replace = os.Getenv("REPLACE_STRING")
+	filter := &Filter{}
+	filter.filterList = parse(get("FILTER_CONFIG"))
 
 	plugin.Serve(&plugin.ServeConfig{
 		HandshakeConfig: shared.Handshake,
