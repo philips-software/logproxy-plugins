@@ -524,6 +524,8 @@ github.com/philips-software/go-hsdp-api v0.37.1 h1:eNtf9N3np+u4b6jvaPjHSy7tgYcUH
 github.com/philips-software/go-hsdp-api v0.37.1/go.mod h1:6Ikri/r6eezHLVN+y4rZpeYygy10CKsuXqOVuDrpoXQ=
 github.com/philips-software/go-hsdp-api v0.38.0 h1:rubuy15X8cXcmz8J1wkQFPsgh4ziwULjUXmZnsZuq44=
 github.com/philips-software/go-hsdp-api v0.38.0/go.mod h1:vzZX4kCmgVwuJcAmd75Yeh/tNu1dNnBRbyau7CFWsuQ=
+github.com/philips-software/go-hsdp-api v0.38.1 h1:lieY98eUNu6QbEpq9LtozFfLr0P1bAVYzOnIX2loqj4=
+github.com/philips-software/go-hsdp-api v0.38.1/go.mod h1:vzZX4kCmgVwuJcAmd75Yeh/tNu1dNnBRbyau7CFWsuQ=
 github.com/philips-software/go-hsdp-signer v1.3.0 h1:Si1voDE/GHzthmxpasPdntbu8aUW6EYJfI6gHVf7BCc=
 github.com/philips-software/go-hsdp-signer v1.3.0/go.mod h1:/QehZ/+Aks2t1TFpjhF/7ZSB8PJIIJHzLc03rOqwLw0=
 github.com/philips-software/logproxy v1.2.1 h1:Ey9MQVWN+oNNppUk4WnJ5QJRw+6WiqgmrNl3AlD9oGA=
