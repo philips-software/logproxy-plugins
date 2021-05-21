@@ -12,7 +12,7 @@ updates:
   - package-ecosystem: "gomod"
     directory: "/logproxy-filter-drop"
     schedule:
-      interval: "daily"
+      interval: "weekly"
   - package-ecosystem: "docker"
     directory: "/logproxy-filter-email"
     schedule:
@@ -20,7 +20,7 @@ updates:
   - package-ecosystem: "gomod"
     directory: "/logproxy-filter-email"
     schedule:
-      interval: "daily"  
+      interval: "weekly"  
   - package-ecosystem: "docker"
     directory: "/logproxy-filter-replace"
     schedule:
@@ -28,7 +28,7 @@ updates:
   - package-ecosystem: "gomod"
     directory: "/logproxy-filter-replace"
     schedule:
-      interval: "daily"  
+      interval: "weekly"  
   - package-ecosystem: "docker"
     directory: "/logproxy-filter-test"
     schedule:
@@ -36,4 +36,4 @@ updates:
   - package-ecosystem: "gomod"
     directory: "/logproxy-filter-test"
     schedule:
-      interval: "daily"
+      interval: "weekly"
