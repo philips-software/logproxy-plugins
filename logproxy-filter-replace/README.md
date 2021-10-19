@@ -35,7 +35,7 @@ Below is an example `manifest.yml` for deployment to Cloud foundry:
 applications:
 - name: logproxy-filter-replace
   docker:
-    image: jdelucaa/logproxy-filter-replace:latest
+    image: philipssoftware/logproxy-filter-replace:latest
   env:
     FILTER_CONFIG: "Ww0KICB7DQogICAgInBhdHRlcm4iOiAiKChbQS1aXSlcXHcrKSIsDQogICAgInJlcGxhY2UiOiAiPEZvb0Jhcj4iDQogIH0NCl0NCg=="
     LOGPROXY_QUEUE: channel
