@@ -48,7 +48,7 @@ We use the official [Logproxy Docker image](https://hub.docker.com/r/philipssoft
 the plugin binary to the app folder. When the image starts your plugin will be auto-detected. Example:
 
 ```Dockerfile
-FROM golang:1.15.3-alpine3.12 as build_base
+FROM golang:1.17.3-alpine3.13 as build_base
 RUN apk add --no-cache git openssh gcc musl-dev
 WORKDIR /plugin
 COPY go.mod .
