@@ -30,8 +30,6 @@ jobs:
          platforms: linux/amd64,linux/arm64
          push: true
          tags: philipssoftware/logproxy-filter-drop:latest
-         cache-from: type=registry,ref=philipssoftware/logproxy-filter-drop:latest
-         cache-to: type=inline
      -
        name: Build and push logproxy-filter-email
        uses: docker/build-push-action@v2
@@ -41,8 +39,6 @@ jobs:
          platforms: linux/amd64,linux/arm64
          push: true
          tags: philipssoftware/logproxy-filter-email:latest
-         cache-from: type=registry,ref=philipssoftware/logproxy-filter-email:latest
-         cache-to: type=inline
      -
        name: Build and push logproxy-filter-replace
        uses: docker/build-push-action@v2
@@ -52,8 +48,6 @@ jobs:
          platforms: linux/amd64,linux/arm64
          push: true
          tags: philipssoftware/logproxy-filter-replace:latest
-         cache-from: type=registry,ref=philipssoftware/logproxy-filter-replace:latest
-         cache-to: type=inline
      -
        name: Build and push logproxy-filter-test
        uses: docker/build-push-action@v2
@@ -63,6 +57,3 @@ jobs:
          platforms: linux/amd64,linux/arm64
          push: true
          tags: philipssoftware/logproxy-filter-test:latest
-         cache-from: type=registry,ref=philipssoftware/logproxy-filter-test:latest
-         cache-to: type=inline
-
