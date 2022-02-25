@@ -8,6 +8,6 @@ require (
 	github.com/bketelsen/crypt v0.0.4 // indirect
 	github.com/hashicorp/go-hclog v1.1.0
 	github.com/hashicorp/go-plugin v1.4.3
-	github.com/philips-software/go-hsdp-api v0.51.8
+	github.com/philips-software/go-hsdp-api v0.61.4
 	github.com/philips-software/logproxy v1.7.1
 )
