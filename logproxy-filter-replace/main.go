@@ -1,10 +1,12 @@
 package main
 
 import (
-	"github.com/hashicorp/go-plugin"
-	"github.com/philips-software/logproxy/shared"
+	"encoding/base64"
 	"regexp"
 	"strings"
+
+	"github.com/hashicorp/go-plugin"
+	"github.com/philips-software/logproxy/shared"
 
 	"github.com/hashicorp/go-hclog"
 	"github.com/philips-software/go-hsdp-api/logging"
@@ -41,12 +43,15 @@ func parse(config []Config) (ret []FilterReplace) {
 func (f Filter) Filter(msg logging.Resource) (logging.Resource, bool, bool, error) {
 	modified := false
 	for _, filter := range f.filterList {
-		if req := filter.pattern.FindAllStringSubmatch(msg.LogData.Message, -1); req != nil {
+		decodedMsg, _ := base64.StdEncoding.DecodeString(msg.LogData.Message)
+		if req := filter.pattern.FindAllStringSubmatch(string(decodedMsg), -1); req != nil {
+			modifiedMsg := string(decodedMsg)
 			for i := range req {
 				for j := range req[i] {
-					msg.LogData.Message = strings.ReplaceAll(msg.LogData.Message, req[i][j], filter.replace)
+					modifiedMsg = strings.ReplaceAll(modifiedMsg, req[i][j], filter.replace)
 				}
 			}
+			msg.LogData.Message = base64.StdEncoding.EncodeToString([]byte(modifiedMsg))
 			modified = true
 		}
 	}
