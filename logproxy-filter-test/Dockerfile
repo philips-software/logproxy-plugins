@@ -14,6 +14,6 @@ WORKDIR /plugin
 COPY . .
 RUN go build .
 
-FROM philipssoftware/logproxy:v1.7.4
+FROM philipssoftware/logproxy:v1.7.5
 RUN apk --no-cache add ca-certificates
 COPY --from=builder /plugin/logproxy-filter-test /app
