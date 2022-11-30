@@ -1,4 +1,4 @@
-FROM golang:1.19.1-alpine3.16 as build_base
+FROM golang:1.19.3-alpine3.16 as build_base
 RUN apk add --no-cache git openssh gcc musl-dev
 WORKDIR /plugin
 COPY go.mod .
