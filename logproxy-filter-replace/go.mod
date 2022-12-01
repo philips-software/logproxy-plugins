@@ -5,12 +5,12 @@ go 1.19
 require (
 	github.com/hashicorp/go-hclog v1.3.1
 	github.com/hashicorp/go-plugin v1.4.5
-	github.com/philips-software/go-hsdp-api v0.75.6
+	github.com/philips-software/go-hsdp-api v0.76.0
 	github.com/philips-software/logproxy v1.7.4
 )
 
 require (
-	github.com/cenkalti/backoff/v4 v4.1.3 // indirect
+	github.com/cenkalti/backoff/v4 v4.2.0 // indirect
 	github.com/fatih/color v1.13.0 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
