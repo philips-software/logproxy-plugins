@@ -4,9 +4,9 @@ go 1.19
 
 require (
 	github.com/hashicorp/go-hclog v1.3.1
-	github.com/hashicorp/go-plugin v1.4.5
+	github.com/hashicorp/go-plugin v1.4.6
 	github.com/philips-software/go-hsdp-api v0.78.2
-	github.com/philips-software/logproxy v1.7.4
+	github.com/philips-software/logproxy v1.7.10
 )
 
 require (
@@ -17,6 +17,7 @@ require (
 	github.com/go-playground/validator/v10 v10.11.2 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
@@ -30,10 +31,10 @@ require (
 	github.com/philips-software/go-hsdp-signer v1.4.0 // indirect
 	golang.org/x/crypto v0.5.0 // indirect
 	golang.org/x/net v0.5.0 // indirect
-	golang.org/x/sync v0.0.0-20220601150217-0de741cfad7f // indirect
+	golang.org/x/sync v0.1.0 // indirect
 	golang.org/x/sys v0.4.0 // indirect
 	golang.org/x/text v0.6.0 // indirect
-	google.golang.org/genproto v0.0.0-20220519153652-3a47de7e79bd // indirect
-	google.golang.org/grpc v1.49.0 // indirect
+	google.golang.org/genproto v0.0.0-20221024183307-1bc688fe9f3e // indirect
+	google.golang.org/grpc v1.51.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 )
