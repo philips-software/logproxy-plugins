@@ -49,8 +49,8 @@ github.com/mitchellh/go-testing-interface v1.14.0 h1:/x0XQ6h+3U3nAyk1yx+bHPURrKa
 github.com/mitchellh/go-testing-interface v1.14.0/go.mod h1:gfgS7OtZj6MA4U1UrDRp04twqAjfvlZyCfX3sDjEym8=
 github.com/oklog/run v1.0.0 h1:Ru7dDtJNOyC66gQ5dQmaCa0qIsAUFY3sFpK1Xk8igrw=
 github.com/oklog/run v1.0.0/go.mod h1:dlhp/R75TPv97u0XWUtDeV/lRKWPKSdTuV0TZvrmrQA=
-github.com/philips-software/go-hsdp-api v0.78.2 h1:1EF8CJhuMiKvtFii6WndXc2BWuSBW0uzXlk5KNO6Aeo=
-github.com/philips-software/go-hsdp-api v0.78.2/go.mod h1:J9j11CrQR7OXcvsSo+/kE20mkKpAuqB1dxVnXQETsf4=
+github.com/philips-software/go-hsdp-api v0.79.1 h1:QWEacZduULKNwnaDjPS5YF6wtsJY1Gc53KSVsCP+6LQ=
+github.com/philips-software/go-hsdp-api v0.79.1/go.mod h1:EDcD+0PXtJjBICd9S4fntNZhqDjSkINlQ3sEMQvDybI=
 github.com/philips-software/go-hsdp-signer v1.4.0 h1:yg7UILhmI4xJhr/tQiAiQwJL0EZFvLuMqpH2GZ9ygY4=
 github.com/philips-software/go-hsdp-signer v1.4.0/go.mod h1:/QehZ/+Aks2t1TFpjhF/7ZSB8PJIIJHzLc03rOqwLw0=
 github.com/philips-software/logproxy v1.7.10 h1:5B7X/lKjgdsBnshab6UgfOJOnHJbN6NRxODmCwPqBnk=
