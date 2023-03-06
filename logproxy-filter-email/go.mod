@@ -12,7 +12,7 @@ require (
 )
 
 require (
-	github.com/aws/aws-sdk-go v1.33.0 // indirect
+	github.com/aws/aws-sdk-go v1.34.0 // indirect
 	github.com/azer/snakecase v1.0.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.0 // indirect
 	github.com/cloudfoundry-community/go-cfenv v1.18.0 // indirect
