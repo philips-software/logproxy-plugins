@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/cloudfoundry-community/gautocloud v1.3.0
 	github.com/hashicorp/go-hclog v1.5.0
-	github.com/hashicorp/go-plugin v1.4.9
+	github.com/hashicorp/go-plugin v1.4.10
 	github.com/philips-software/gautocloud-connectors v0.7.0
 	github.com/philips-software/go-hsdp-api v0.79.1
 	github.com/philips-software/logproxy v1.8.3
