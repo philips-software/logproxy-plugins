@@ -6,7 +6,7 @@ toolchain go1.21.6
 
 require (
 	github.com/cloudfoundry-community/gautocloud v1.3.2
-	github.com/hashicorp/go-hclog v1.5.0
+	github.com/hashicorp/go-hclog v1.6.2
 	github.com/hashicorp/go-plugin v1.6.0
 	github.com/philips-software/gautocloud-connectors v0.7.0
 	github.com/philips-software/go-hsdp-api v0.83.3
