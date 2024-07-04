@@ -40,7 +40,7 @@ jobs:
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
       -
         name: Build and push logproxy-filter-drop
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ./logproxy-filter-drop
           file: ./logproxy-filter-drop/Dockerfile
@@ -49,7 +49,7 @@ jobs:
           tags: philipssoftware/logproxy-filter-drop:${{ steps.vars.outputs.tag }},docker.na1.hsdp.io/philipssoftware/logproxy-filter-drop:${{ steps.vars.outputs.tag }}
       -
         name: Build and push logproxy-filter-email
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ./logproxy-filter-email
           file: ./logproxy-filter-email/Dockerfile
@@ -58,7 +58,7 @@ jobs:
           tags: philipssoftware/logproxy-filter-email:${{ steps.vars.outputs.tag }},docker.na1.hsdp.io/philipssoftware/logproxy-filter-email:${{ steps.vars.outputs.tag }} 
       -
         name: Build and push logproxy-filter-replace
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ./logproxy-filter-replace
           file: ./logproxy-filter-replace/Dockerfile
@@ -67,7 +67,7 @@ jobs:
           tags: philipssoftware/logproxy-filter-replace:${{ steps.vars.outputs.tag }},docker.na1.hsdp.io/philipssoftware/logproxy-filter-replace:${{ steps.vars.outputs.tag }}
       -
         name: Build and push logproxy-filter-test
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ./logproxy-filter-test
           file: ./logproxy-filter-test/Dockerfile
