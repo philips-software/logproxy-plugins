@@ -44,12 +44,10 @@ func (f Filter) Filter(msg logging.Resource) (logging.Resource, bool, bool, erro
 	modified := false
 	for _, filter := range f.filterList {
 		decodedMsg, _ := base64.StdEncoding.DecodeString(msg.LogData.Message)
-		if req := filter.pattern.FindAllStringSubmatch(string(decodedMsg), -1); req != nil {
+		if req := filter.pattern.FindAllString(string(decodedMsg), -1); req != nil {
 			modifiedMsg := string(decodedMsg)
-			for i := range req {
-				for j := range req[i] {
-					modifiedMsg = strings.ReplaceAll(modifiedMsg, req[i][j], filter.replace)
-				}
+			for _, match := range req {
+				modifiedMsg = strings.ReplaceAll(modifiedMsg, match, filter.replace)
 			}
 			msg.LogData.Message = base64.StdEncoding.EncodeToString([]byte(modifiedMsg))
 			modified = true
