@@ -1,10 +1,11 @@
 package main
 
 import (
-	"fmt"
-	"github.com/hashicorp/go-hclog"
+	"encoding/base64"
 	"os"
 	"testing"
+
+	"github.com/hashicorp/go-hclog"
 
 	"github.com/philips-software/go-hsdp-api/logging"
 )
@@ -25,8 +26,12 @@ func TestFilter_Filter(t *testing.T) {
 	}
 	config := []Config{
 		{
-			Pattern: "[a-z0-9._%+\\-]+@[a-z0-9.\\-]+\\.[a-z]{2,4}",
+			Pattern: "[a-z0-9._%+\\-]+(@|%40)[a-z0-9.\\-]+\\.[a-z]{2,4}",
 			Replace: "<email obfuscated>",
+		},
+		{
+			Pattern: "identifier(%3D|=)[^&\\s]*",
+			Replace: "identifier=*****",
 		},
 	}
 	tests := []struct {
@@ -41,8 +46,8 @@ func TestFilter_Filter(t *testing.T) {
 		{
 			"Modified",
 			fields{filterList: parse(config)},
-			args{msg: "dumbmessage lilpotato@potato.com foobarmessage bigpotato@potato.com"},
-			fmt.Sprintf("dumbmessage %s foobarmessage %s", "<email obfuscated>", "<email obfuscated>"),
+			args{msg: base64.StdEncoding.EncodeToString([]byte("dumbmessage lilpotato@potato.com somemessage russet.potatoes%40potato.com foobarmessage bigpotato@potato.com"))},
+			"dumbmessage <email obfuscated> somemessage <email obfuscated> foobarmessage <email obfuscated>",
 			false,
 			true,
 			nil,
@@ -50,10 +55,28 @@ func TestFilter_Filter(t *testing.T) {
 		{
 			"NotModified",
 			fields{filterList: parse(config)},
-			args{msg: "dumbmessage foobarmessage"},
+			args{msg: base64.StdEncoding.EncodeToString([]byte("dumbmessage foobarmessage"))},
 			"dumbmessage foobarmessage",
 			false,
 			false,
+			nil,
+		},
+		{
+			"Modified",
+			fields{filterList: parse(config)},
+			args{msg: base64.StdEncoding.EncodeToString([]byte("GET /logging?procedure.identifier=https://www.philips.com/identifiers/ProcedureIdentifier|ACC_20241120110729422 HTTP/1.1"))},
+			"GET /logging?procedure.identifier=***** HTTP/1.1",
+			false,
+			true,
+			nil,
+		},
+		{
+			"Modified",
+			fields{filterList: parse(config)},
+			args{msg: base64.StdEncoding.EncodeToString([]byte("GET /logging?procedure.identifier%3Dhttps://www.philips.com/identifiers/ProcedureIdentifier|ACC_20241120110729422 HTTP/1.1"))},
+			"GET /logging?procedure.identifier=***** HTTP/1.1",
+			false,
+			true,
 			nil,
 		},
 	}
@@ -65,12 +88,13 @@ func TestFilter_Filter(t *testing.T) {
 			log := &logging.Resource{}
 			log.LogData.Message = tt.args.msg
 			msg, dropped, modified, err := f.Filter(*log)
+			decodedMsg, _ := base64.StdEncoding.DecodeString(msg.LogData.Message)
 			if err != tt.wantErr {
 				t.Errorf("Filter() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if msg.LogData.Message != tt.wantLogMessage {
-				t.Errorf("FilterReplace.Filter() got = %v, want %v", msg.LogData.Message, tt.wantLogMessage)
+			if string(decodedMsg) != tt.wantLogMessage {
+				t.Errorf("FilterReplace.Filter() got = %v, want %v", string(decodedMsg), tt.wantLogMessage)
 			}
 			if dropped != tt.wantDropped {
 				t.Errorf("Filter() got1 = %v, want %v", dropped, tt.wantDropped)
