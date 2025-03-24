@@ -10,10 +10,9 @@ import (
 	"github.com/cloudfoundry-community/gautocloud"
 	_ "github.com/cloudfoundry-community/gautocloud/connectors/smtp"
 	"github.com/cloudfoundry-community/gautocloud/connectors/smtp/smtptype"
+	"github.com/dip-software/go-dip-api/logging"
 	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/go-plugin"
-	_ "github.com/philips-software/gautocloud-connectors/hsdp"
-	"github.com/philips-software/go-hsdp-api/logging"
 	"github.com/philips-software/logproxy/shared"
 )
 

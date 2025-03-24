@@ -22,13 +22,6 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       -
-        name: Login to HSDP Docker registry
-        uses: docker/login-action@v3
-        with:
-          registry: docker.na1.hsdp.io
-          username: ${{ secrets.HSDP_DOCKER_USERNAME }}
-          password: ${{ secrets.HSDP_DOCKER_PASSWORD }}
-      -
         name: Checkout repository
         uses: actions/checkout@v4
         with:
@@ -46,7 +39,7 @@ jobs:
           file: ./logproxy-filter-drop/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: philipssoftware/logproxy-filter-drop:${{ steps.vars.outputs.tag }},docker.na1.hsdp.io/philipssoftware/logproxy-filter-drop:${{ steps.vars.outputs.tag }}
+          tags: philipssoftware/logproxy-filter-drop:${{ steps.vars.outputs.tag }}
       -
         name: Build and push logproxy-filter-email
         uses: docker/build-push-action@v6
@@ -55,7 +48,7 @@ jobs:
           file: ./logproxy-filter-email/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: philipssoftware/logproxy-filter-email:${{ steps.vars.outputs.tag }},docker.na1.hsdp.io/philipssoftware/logproxy-filter-email:${{ steps.vars.outputs.tag }} 
+          tags: philipssoftware/logproxy-filter-email:${{ steps.vars.outputs.tag }} 
       -
         name: Build and push logproxy-filter-replace
         uses: docker/build-push-action@v6
@@ -64,7 +57,7 @@ jobs:
           file: ./logproxy-filter-replace/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: philipssoftware/logproxy-filter-replace:${{ steps.vars.outputs.tag }},docker.na1.hsdp.io/philipssoftware/logproxy-filter-replace:${{ steps.vars.outputs.tag }}
+          tags: philipssoftware/logproxy-filter-replace:${{ steps.vars.outputs.tag }}
       -
         name: Build and push logproxy-filter-test
         uses: docker/build-push-action@v6
@@ -73,4 +66,4 @@ jobs:
           file: ./logproxy-filter-test/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: philipssoftware/logproxy-filter-test:${{ steps.vars.outputs.tag }},docker.na1.hsdp.io/philipssoftware/logproxy-filter-test:${{ steps.vars.outputs.tag }}
+          tags: philipssoftware/logproxy-filter-test:${{ steps.vars.outputs.tag }}

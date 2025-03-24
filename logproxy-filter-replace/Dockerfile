@@ -1,4 +1,4 @@
-FROM golang:1.23.4-alpine3.19 as build_base
+FROM golang:1.24.1-alpine3.20 as build_base
 RUN apk add --no-cache git openssh gcc musl-dev
 WORKDIR /plugin
 COPY go.mod .
@@ -14,7 +14,7 @@ WORKDIR /plugin
 COPY . .
 RUN go build .
 
-FROM ghcr.io/philips-software/logproxy:v1.9.0
+FROM ghcr.io/philips-software/logproxy:v1.11.0
 RUN apk --no-cache add ca-certificates
 COPY --from=builder /plugin/logproxy-filter-replace /app
 

@@ -8,8 +8,8 @@ import (
 	"github.com/hashicorp/go-plugin"
 	"github.com/philips-software/logproxy/shared"
 
+	"github.com/dip-software/go-dip-api/logging"
 	"github.com/hashicorp/go-hclog"
-	"github.com/philips-software/go-hsdp-api/logging"
 )
 
 var (

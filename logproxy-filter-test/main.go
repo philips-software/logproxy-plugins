@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/dip-software/go-dip-api/logging"
 	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/go-plugin"
-	"github.com/philips-software/go-hsdp-api/logging"
 	"github.com/philips-software/logproxy/shared"
 )
 
@@ -15,7 +15,7 @@ func (f Filter) Filter(msg logging.Resource) (logging.Resource, bool, bool, erro
 	dropped := false
 	hclog.Default().Info(fmt.Sprintf("Processed: %s", msg.ID))
 	msg.ID = "42"
-	modified = true	
+	modified = true
 	return msg, dropped, modified, nil
 }
 
